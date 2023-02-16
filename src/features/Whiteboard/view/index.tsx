@@ -3,7 +3,8 @@ import { DaDItem } from "../components";
 import { useWhiteboard } from "../hooks";
 
 export const Template: React.FC = () => {
-  const { items, draggedItem, updateItem, setDraggedItem } = useWhiteboard();
+  const { items, draggedItem, addItem, updateItem, setDraggedItem } =
+    useWhiteboard();
   return (
     <div
       style={{ width: "100vw", height: "100vh", position: "relative" }}
@@ -16,7 +17,19 @@ export const Template: React.FC = () => {
       }}
       onDragOver={(e) => e.preventDefault()}
     >
-      {items.map((item) => (
+      <button
+        onClick={() =>
+          addItem({
+            id: Math.random().toString(36).substr(2, 9),
+            content: "New item",
+            x: Math.random() * 500,
+            y: Math.random() * 500,
+          })
+        }
+      >
+        Add
+      </button>
+      {items?.map((item) => (
         <DaDItem
           key={item.id}
           item={item}
