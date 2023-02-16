@@ -1,9 +1,10 @@
 import "./App.css";
+import { Whiteboard } from "./features/Whiteboard";
 
 function App() {
   return (
     <div className="App">
-      <p>Hello Vite + React!</p>
+      <Whiteboard />
     </div>
   );
 }
