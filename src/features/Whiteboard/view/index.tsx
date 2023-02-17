@@ -1,10 +1,20 @@
-import { useState } from "react";
-import { DaDItem } from "../components";
+import { CurrentUsers, DaDItem, TopMenu } from "../components";
 import { useWhiteboard } from "../hooks";
 
 export const Template: React.FC = () => {
-  const { items, draggedItem, addItem, updateItem, setDraggedItem } =
-    useWhiteboard();
+  const {
+    users,
+    items,
+    draggedItem,
+    addItem,
+    updateItem,
+    deleteItem,
+    deleteAll,
+    setDraggedItem,
+  } = useWhiteboard();
+
+  console.log(users);
+
   return (
     <div
       style={{ width: "100vw", height: "100vh", position: "relative" }}
@@ -17,18 +27,18 @@ export const Template: React.FC = () => {
       }}
       onDragOver={(e) => e.preventDefault()}
     >
-      <button
-        onClick={() =>
+      <TopMenu
+        onAdd={() =>
           addItem({
             id: Math.random().toString(36).substr(2, 9),
-            content: "New item",
+            content: "New item added at " + new Date().toLocaleTimeString(),
             x: Math.random() * 500,
             y: Math.random() * 500,
           })
         }
-      >
-        Add
-      </button>
+        onDeleteAll={deleteAll}
+      />
+      <CurrentUsers />
       {items?.map((item) => (
         <DaDItem
           key={item.id}
@@ -41,6 +51,7 @@ export const Template: React.FC = () => {
               y: e.clientY - item.y,
             })
           }
+          onDelete={() => deleteItem(item.id)}
         />
       ))}
     </div>
